@@ -9,14 +9,14 @@ configure(locals())
 
 
 def get_url(hash_code):
-    url ="https://1fichier.com/?{}&auth=1".format(hash_code)
+    url ="http://1fichier.com/?{}&e=1".format(hash_code)
     auth_str = os.environ.get("USER_PASSWORD", "").split(":")
     resp = requests.get(url, auth=tuple(auth_str))
-    try:
-        resp.raise_for_status()
-        return str(resp.content).split(";")[0]
-    except:
-        return "http://puya.si?msg=que querias hacer"
+    resp.raise_for_status()
+    data = resp.content.decode("utf-8").split(";")
+    if 'puya' in data[1].lower():
+        return data[0]
+    return "http://puya.si?msg=que querias hacer"
 
 
 @route('', name='homepage')

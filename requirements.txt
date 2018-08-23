@@ -1,0 +1,3 @@
+django-micro
+requests
+memorised
